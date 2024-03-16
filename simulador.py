@@ -9,9 +9,13 @@ from controlador import *
 CONTROLADOR = ControladorCaminhao()
 #CONTROLADOR.fuzzy.exibir()
 
+INCERTEZA = True
+
 TORADIAS = math.pi/180.0
 TODEGRESS = 180.0/math.pi
-INCREMENTO = 2
+INCREMENTO = 1.5
+
+POSICAO_INICIAL = (375, 150)
 
 random.seed(0)
 pygame.init()
@@ -54,7 +58,10 @@ class Caminhao:
 
         diferenca = self.traseira.difference(self.motor)
         angulo_atual = math.atan2(diferenca.y, diferenca.x) * TODEGRESS
-        angulo_atual += self.angulo + random.random()
+        angulo_atual += self.angulo
+
+        if INCERTEZA:
+            angulo_atual += random.random()
 
         self.motor.x += INCREMENTO * math.cos(angulo_atual*TORADIAS)
         self.motor.y += INCREMENTO * math.sin(angulo_atual*TORADIAS)
@@ -67,8 +74,8 @@ class Caminhao:
         self.traseira.y = diferenca.y + self.motor.y
         
     def reiniciar(self):
-        self.motor:Posicao = Posicao(375+13, 150 + 13)
-        self.traseira:Posicao = Posicao(375+13, 250 - 13)
+        self.motor:Posicao = Posicao(POSICAO_INICIAL[0]+13, POSICAO_INICIAL[1] + 13)
+        self.traseira:Posicao = Posicao(POSICAO_INICIAL[0]+13, POSICAO_INICIAL[1] + 100 - 13)
     
     def anguloEixoX(self) -> float:
         diferenca = self.traseira.difference(self.motor)

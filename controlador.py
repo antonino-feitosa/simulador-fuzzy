@@ -227,10 +227,10 @@ class ControladorCaminhao(ControladorFuzzy):
         self.fuzzy.alterarRegra(distancia.obter("Longe"), angulo.obter("Adequado"), rodas.obter("Adequado"))
         self.fuzzy.alterarRegra(distancia.obter("Longe"), angulo.obter("Direito"), rodas.obter("Muito Esquerdo"))
 
+
     # distancia para parede no eixo y de 0 até 400
     # ângulo do caminhão com o eixo X
     # saída: ângulo das rodas: valor entre -45 e 45 graus
-
     def ajustar(self, distancia_para_parede: float, angulo_com_eixo_x: float) -> float:
         
         x = self.escalar(distancia_para_parede, 0, 400)
