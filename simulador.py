@@ -5,8 +5,9 @@ import pygame
 import random
 from controlador import *
 
+#CONTROLADOR = Controlador()
 CONTROLADOR = ControladorCaminhao()
-CONTROLADOR.fuzzy.exibir()
+#CONTROLADOR.fuzzy.exibir()
 
 TORADIAS = math.pi/180.0
 TODEGRESS = 180.0/math.pi
@@ -53,7 +54,7 @@ class Caminhao:
 
         diferenca = self.traseira.difference(self.motor)
         angulo_atual = math.atan2(diferenca.y, diferenca.x) * TODEGRESS
-        angulo_atual += self.angulo
+        angulo_atual += self.angulo + random.random()
 
         self.motor.x += INCREMENTO * math.cos(angulo_atual*TORADIAS)
         self.motor.y += INCREMENTO * math.sin(angulo_atual*TORADIAS)
@@ -62,7 +63,7 @@ class Caminhao:
         diferenca.toUnit()
         diferenca.scale(70)
         
-        self.traseira.x = diferenca.x + self.motor.x + 0.25 * random.random()
+        self.traseira.x = diferenca.x + self.motor.x
         self.traseira.y = diferenca.y + self.motor.y
         
     def reiniciar(self):

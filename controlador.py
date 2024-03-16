@@ -9,7 +9,10 @@ class Controlador:
     # ângulo do caminhão com o eixo X
     # saída: ângulo das rodas: valor entre -30 e 30 graus
     def ajustar(self, distancia_para_parede: float, angulo_com_eixo_x: float) -> float:
-        return -30
+        if angulo_com_eixo_x < 2 and angulo_com_eixo_x > -2:
+            return 0
+        return -45
+
 
 
 class ConjuntoFuzzy(Controlador):
@@ -98,6 +101,9 @@ class UniversoDiscurso:
             def deslocar(x):
                 return x * 4 + 100
 
+            texto = fonte.render(self.nome, True, (255, 255, 255))
+            screen.blit(texto, (20, 20))
+
             x = 20
             for conjunto in self.conjuntos:
                 pygame.draw.line(screen, conjunto.cor, (deslocar(
@@ -107,7 +113,7 @@ class UniversoDiscurso:
                 pygame.draw.line(screen, conjunto.cor, (deslocar(
                     conjunto.topo_final), 100), (deslocar(conjunto.base_final), 200))
                 texto_eixo = fonte.render(conjunto.nome, True, conjunto.cor)
-                screen.blit(texto_eixo, (x, 20))
+                screen.blit(texto_eixo, (x, 60))
                 x += 100
 
             pygame.display.flip()
@@ -201,9 +207,11 @@ class ControladorCaminhao(ControladorFuzzy):
         angulo.adicionarConjunto("Direito", 50, 60, 100, 100)
 
         rodas = UniversoDiscurso("Rodas")
-        rodas.adicionarConjunto("Esquerdo", 0, 0, 40, 50)
+        rodas.adicionarConjunto("Muito Esquerdo", 0, 0, 10, 30)
+        rodas.adicionarConjunto("Esquerdo", 20, 35, 35, 50)
         rodas.adicionarConjunto("Adequado", 40, 50, 50, 60)
-        rodas.adicionarConjunto("Direito", 50, 60, 100, 100)
+        rodas.adicionarConjunto("Direito", 50, 65, 65, 80)
+        rodas.adicionarConjunto("Muito Direito", 70, 90, 100, 100)
 
         self.fuzzy = ControladorFuzzy(distancia, angulo, rodas)
 
@@ -215,9 +223,9 @@ class ControladorCaminhao(ControladorFuzzy):
         self.fuzzy.alterarRegra(distancia.obter("Adequado"), angulo.obter("Adequado"), rodas.obter("Adequado"))
         self.fuzzy.alterarRegra(distancia.obter("Adequado"), angulo.obter("Direito"), rodas.obter("Esquerdo"))
 
-        self.fuzzy.alterarRegra(distancia.obter("Longe"), angulo.obter("Esquerdo"), rodas.obter("Direito"))
+        self.fuzzy.alterarRegra(distancia.obter("Longe"), angulo.obter("Esquerdo"), rodas.obter("Muito Direito"))
         self.fuzzy.alterarRegra(distancia.obter("Longe"), angulo.obter("Adequado"), rodas.obter("Adequado"))
-        self.fuzzy.alterarRegra(distancia.obter("Longe"), angulo.obter("Direito"), rodas.obter("Esquerdo"))
+        self.fuzzy.alterarRegra(distancia.obter("Longe"), angulo.obter("Direito"), rodas.obter("Muito Esquerdo"))
 
     # distancia para parede no eixo y de 0 até 400
     # ângulo do caminhão com o eixo X
