@@ -215,17 +215,17 @@ class ControladorCaminhao(ControladorFuzzy):
 
         self.fuzzy = ControladorFuzzy(distancia, angulo, rodas)
 
-        self.fuzzy.alterarRegra(distancia.obter("Perto"), angulo.obter("Esquerdo"), rodas.obter("Direito"))
+        self.fuzzy.alterarRegra(distancia.obter("Perto"), angulo.obter("Esquerdo"), rodas.obter("Esquerdo"))
         self.fuzzy.alterarRegra(distancia.obter("Perto"), angulo.obter("Adequado"), rodas.obter("Adequado"))
-        self.fuzzy.alterarRegra(distancia.obter("Perto"), angulo.obter("Direito"), rodas.obter("Esquerdo"))
+        self.fuzzy.alterarRegra(distancia.obter("Perto"), angulo.obter("Direito"), rodas.obter("Direito"))
 
-        self.fuzzy.alterarRegra(distancia.obter("Adequado"), angulo.obter("Esquerdo"), rodas.obter("Direito"))
+        self.fuzzy.alterarRegra(distancia.obter("Adequado"), angulo.obter("Esquerdo"), rodas.obter("Esquerdo"))
         self.fuzzy.alterarRegra(distancia.obter("Adequado"), angulo.obter("Adequado"), rodas.obter("Adequado"))
-        self.fuzzy.alterarRegra(distancia.obter("Adequado"), angulo.obter("Direito"), rodas.obter("Esquerdo"))
+        self.fuzzy.alterarRegra(distancia.obter("Adequado"), angulo.obter("Direito"), rodas.obter("Direito"))
 
-        self.fuzzy.alterarRegra(distancia.obter("Longe"), angulo.obter("Esquerdo"), rodas.obter("Muito Direito"))
+        self.fuzzy.alterarRegra(distancia.obter("Longe"), angulo.obter("Esquerdo"), rodas.obter("Muito Esquerdo"))
         self.fuzzy.alterarRegra(distancia.obter("Longe"), angulo.obter("Adequado"), rodas.obter("Adequado"))
-        self.fuzzy.alterarRegra(distancia.obter("Longe"), angulo.obter("Direito"), rodas.obter("Muito Esquerdo"))
+        self.fuzzy.alterarRegra(distancia.obter("Longe"), angulo.obter("Direito"), rodas.obter("Muito Direito"))
 
 
     # distancia para parede no eixo y de 0 até 400
@@ -238,6 +238,7 @@ class ControladorCaminhao(ControladorFuzzy):
         angulo = angulo_com_eixo_x
         if angulo > 180:
             angulo = angulo - 360
+        angulo = -angulo
         y = self.escalar(angulo, -180, 180)
 
         z_out = self.fuzzy.avalie(x, y)
